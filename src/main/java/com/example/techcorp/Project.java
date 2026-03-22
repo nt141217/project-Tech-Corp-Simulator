@@ -27,7 +27,7 @@ public class Project {
     }
 
     public void addEmployee(Employee employee) {
-        this.team.add(employee);
+        team.add(employee);
     }
 
     public void setRequiredWork(int newRequiredWork){
@@ -48,5 +48,9 @@ public class Project {
 
     public int getProgress() {
         return progress;
+    }
+
+    public List<Employee> getTeam(){
+        return team; 
     }
 }

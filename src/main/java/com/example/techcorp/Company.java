@@ -23,4 +23,37 @@ public class Company {
     public void startProject(Project project) {
         projects.add(project);
     }
+
+    public void showStatus() {
+    System.out.println("=== COMPANY STATUS ===");
+    System.out.println("Name: " + name);
+    System.out.println("Budget: " + budget);
+    System.out.println("Employees: " + employees.size());
+    System.out.println("Projects: " + projects.size());
+
+    for (Project project : projects) {
+        System.out.println(
+            "Project: " + project.getName() +
+            ", progress: " + project.getProgress() + "/" +
+            project.getRequiredWork() +
+            ", finished: " + project.isFinished()
+        );
+    }
+}
+
+public String getName() {
+    return name;
+}
+
+public double getBudget() {
+    return budget;
+}
+
+public List<Employee> getEmployees() {
+    return employees;
+}
+
+public List<Project> getProjects() {
+    return projects;
+}
 }

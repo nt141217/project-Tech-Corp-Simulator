@@ -16,4 +16,16 @@ public class Employee {
         return skill;
     }
 
+    public String getName(){
+        return name;
+    }
+
+    public int getSkill(){
+        return skill;
+    }
+
+    public double getSalary(){
+        return salary; 
+    }
+
 }

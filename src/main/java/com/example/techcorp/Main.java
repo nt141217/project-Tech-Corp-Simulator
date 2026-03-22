@@ -2,39 +2,46 @@ package com.example.techcorp;
 
 public class Main {
     public static void main(String[] args) {
-
         Company company = new Company("TechCorp", 50000);
 
         Employee anna = new Employee("Anna", 8, 7000);
         Employee piotr = new Employee("Piotr", 6, 6500);
-        Employee martyna = new Employee("Martyna",10,8000);
+        Employee ewa = new Employee("Ewa", 5, 6000);
 
         company.hire(anna);
         company.hire(piotr);
-        company.hire(martyna);
+        company.hire(ewa);
 
-        Project project = new Project("Mobile App", 30);
+       // Project project = new Project("Mobile App", 30);
+       Project project = new Project("Mobile App", 50);
+
         project.addEmployee(anna);
         project.addEmployee(piotr);
 
-        company.startProject(project);
+        Project website = new Project ("Website", 20);
+        website.addEmployee(piotr);
 
-        Project project2 = new Project("Nowy Projekt", 50);
-        project2.setRequiredWork(90);
-        project2.addEmployee(martyna);
-
-        System.out.println(project);
         company.startProject(project);
+        company.startProject(website);
+
+        System.out.println("Stan poczatkowy:");
+        company.showStatus();
+
+        System.out.println("\n--- Tura 1 ---");
         project.workOneTurn();
+        company.showStatus();
 
-        int turns = 0;
-        while (!project.isFinished()) {
-            project1.workOneTurn();
-            turns++;
-            System.out.println("Turn " + turns + ": progress = "
-                    + project1.getProgress() + "/" + project1.getRequiredWork());
-        }
+        System.out.println("\n--- Tura 2 ---");
+        project.workOneTurn();
+        company.showStatus();
 
-        System.out.println("Project " + project1.getName() + " finished in " + turns + " turns.");
+    int turns = 0;
+
+    while (!project.isFinished()) {
+    project.workOneTurn();
+    turns++;
+    }
+
+    System.out.println("Projekt zakonczyl sie po " + turns + " turach.");
     }
 }
