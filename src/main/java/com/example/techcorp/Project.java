@@ -4,38 +4,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project {
+
     private String name;
-    private List<Employee> team;
     private int requiredWork;
     private int progress;
+    private List<Employee> team;
+    private ProjectStatus status;
 
     public Project(String name, int requiredWork) {
+        validateName(name);
+        validateRequiredWork(requiredWork);
+
         this.name = name;
         this.requiredWork = requiredWork;
         this.progress = 0;
         this.team = new ArrayList<>();
+        this.status = ProjectStatus.PLANNED;
+    }
+
+    public void addEmployee(Employee employee) {
+        if (employee == null) {
+            throw new IllegalArgumentException("Employee cannot be null.");
+        }
+
+        team.add(employee);
+    }
+
+    public void start() {
+        if (status == ProjectStatus.PLANNED) {
+            status = ProjectStatus.IN_PROGRESS;
+        }
+    }
+
+    public void cancel() {
+        if (status != ProjectStatus.FINISHED) {
+            status = ProjectStatus.CANCELLED;
+        }
     }
 
     public void workOneTurn() {
+        if (status != ProjectStatus.IN_PROGRESS) {
+            return;
+        }
+
         for (Employee employee : team) {
             progress += employee.work();
         }
 
-        if (progress > requiredWork) {
+        if (progress >= requiredWork) {
             progress = requiredWork;
+            status = ProjectStatus.FINISHED;
         }
     }
 
-    public void addEmployee(Employee employee) {
-        team.add(employee);
-    }
-
-    public void setRequiredWork(int newRequiredWork){
-        this.requiredWork = newRequiredWork;
-    }
-
-        public boolean isFinished() {
-        return progress >= requiredWork;
+    public boolean isFinished() {
+        return status == ProjectStatus.FINISHED;
     }
 
     public String getName() {
@@ -50,7 +73,23 @@ public class Project {
         return progress;
     }
 
-    public List<Employee> getTeam(){
-        return team; 
+    public List<Employee> getTeam() {
+        return team;
+    }
+
+    public ProjectStatus getStatus() {
+        return status;
+    }
+
+    private void validateName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Project name cannot be null or blank.");
+        }
+    }
+
+    private void validateRequiredWork(int requiredWork) {
+        if (requiredWork <= 0) {
+            throw new IllegalArgumentException("Required work must be greater than 0.");
+        }
     }
 }

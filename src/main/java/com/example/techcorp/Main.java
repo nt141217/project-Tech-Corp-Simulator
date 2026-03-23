@@ -17,12 +17,16 @@ public class Main {
 
         project.addEmployee(anna);
         project.addEmployee(piotr);
+        project.addEmployee(ewa);
 
         Project website = new Project ("Website", 20);
         website.addEmployee(piotr);
 
         company.startProject(project);
         company.startProject(website);
+
+        project.start();
+         website.start();
 
         System.out.println("Stan poczatkowy:");
         company.showStatus();
@@ -39,6 +43,7 @@ public class Main {
 
     while (!project.isFinished()) {
     project.workOneTurn();
+    company.showStatus();
     turns++;
     }
 
