@@ -32,16 +32,17 @@ public class Project {
 
     public void start() {
         if (status == ProjectStatus.PLANNED) {
-            status = ProjectStatus.IN_PROGRESS;
+            changeStatus(ProjectStatus.IN_PROGRESS);
         }
     }
 
     public void cancel() {
-        if (status != ProjectStatus.FINISHED) {
-            status = ProjectStatus.CANCELLED;
+    if (status != ProjectStatus.FINISHED) {
+        changeStatus(ProjectStatus.CANCELLED);
         }
     }
 
+/*
     public void workOneTurn() {
         if (status != ProjectStatus.IN_PROGRESS) {
             return;
@@ -56,6 +57,7 @@ public class Project {
             status = ProjectStatus.FINISHED;
         }
     }
+    */
 
     public boolean isFinished() {
         return status == ProjectStatus.FINISHED;
@@ -91,5 +93,43 @@ public class Project {
         if (requiredWork <= 0) {
             throw new IllegalArgumentException("Required work must be greater than 0.");
         }
+    }
+        // Exercise 1
+    public void putOnHold() {
+        if (status == ProjectStatus.IN_PROGRESS) {
+            changeStatus(ProjectStatus.ON_HOLD);
+        }
+    }
+
+    // Ex 2
+    public void resume() {
+        if (status == ProjectStatus.ON_HOLD) {
+            changeStatus(ProjectStatus.IN_PROGRESS);
+        }
+    }
+
+    // Ex 3
+    public void workOneTurn() {
+        if (status == ProjectStatus.PLANNED
+                || status == ProjectStatus.ON_HOLD
+                || status == ProjectStatus.CANCELLED
+                || status == ProjectStatus.FINISHED) {
+            return;
+        }
+
+        for (Employee employee : team) {
+            progress += employee.work();
+        }
+
+        if (progress >= requiredWork) {
+            progress = requiredWork;
+            changeStatus(ProjectStatus.FINISHED);
+        }
+    }
+
+    // Exercise 4
+    private void changeStatus(ProjectStatus newStatus) {
+        System.out.println("Project status changed from " + status + " to " + newStatus + ".");
+        status = newStatus;
     }
 }
