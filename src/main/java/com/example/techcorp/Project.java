@@ -8,7 +8,8 @@ public class Project {
     private String name;
     private int requiredWork;
     private int progress;
-    private List<Employee> team;
+  //  private List<Employee> team;
+  private List<Workable> team; 
     private ProjectStatus status;
 
     public Project(String name, int requiredWork) {
@@ -22,6 +23,15 @@ public class Project {
         this.status = ProjectStatus.PLANNED;
     }
 
+    public void addWorker(Workable workable) {
+    if (workable == null) {
+        throw new IllegalArgumentException("Worker cannot be null.");
+    }
+
+    team.add(workable);
+}
+
+/*
     public void addEmployee(Employee employee) {
         if (employee == null) {
             throw new IllegalArgumentException("Employee cannot be null.");
@@ -29,6 +39,8 @@ public class Project {
 
         team.add(employee);
     }
+    */
+
 
     public void start() {
         if (status == ProjectStatus.PLANNED) {
@@ -75,9 +87,15 @@ public class Project {
         return progress;
     }
 
+/*
     public List<Employee> getTeam() {
         return team;
     }
+    */ 
+
+   public List<Workable> getTeam(){
+    return team; 
+   }
 
     public ProjectStatus getStatus() {
         return status;
@@ -109,6 +127,7 @@ public class Project {
     }
 
     // Ex 3
+    /*
     public void workOneTurn() {
         if (status == ProjectStatus.PLANNED
                 || status == ProjectStatus.ON_HOLD
@@ -126,6 +145,22 @@ public class Project {
             changeStatus(ProjectStatus.FINISHED);
         }
     }
+    */ 
+
+   public void workOneTurn() {
+    if (status != ProjectStatus.IN_PROGRESS) {
+        return;
+    }
+
+    for (Workable workable : team) {
+        progress += workable.work();
+    }
+
+    if (progress >= requiredWork) {
+        progress = requiredWork;
+        status = ProjectStatus.FINISHED;
+    }
+}
 
     // Exercise 4
     private void changeStatus(ProjectStatus newStatus) {

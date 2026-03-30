@@ -2,6 +2,7 @@ package com.example.techcorp;
 
 public class Main {
     public static void main(String[] args) {
+        /*
         Company company = new Company("TechCorp", 50000);
 
         Employee anna = new Employee("Anna", 8, 7000);
@@ -48,5 +49,35 @@ public class Main {
     }
 
     System.out.println("Projekt zakonczyl sie po " + turns + " turach.");
+    
+    */ 
+
+   //Main pod Java_5 lesson 4b
+    Project mobileApp = new Project("Mobile App", 40);
+
+        mobileApp.addWorker(new Developer("Anna", 9, 8000));
+        mobileApp.addWorker(new Tester("Piotr", 6, 6500));
+        mobileApp.addWorker(new Manager("Ewa", 7, 9000));
+        mobileApp.addWorker(new AutomatedTool("CI Pipeline", 5));
+
+        mobileApp.start();
+
+        while (!mobileApp.isFinished()) {
+            mobileApp.workOneTurn();
+
+            System.out.println(
+                    mobileApp.getName() + " | status: "
+                            + mobileApp.getStatus()
+                            + " | progress: "
+                            + mobileApp.getProgress() + "/" + mobileApp.getRequiredWork()
+            );
+        }
+
+        Project project = new Project("New System", 50);
+        project.addWorker(new Developer("Anna", 10, 8000));
+        project.addWorker(new Tester("Piotr", 6, 6000));
+        project.addWorker(new Manager("Ewa", 8, 9000));
+        project.addWorker(new AutomatedTool("CI", 5));
+        project.addWorker(new FreelancerBot("BotX", 7));
     }
 }
